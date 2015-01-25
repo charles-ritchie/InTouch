@@ -27,5 +27,7 @@
     <string name="text_days_to_alert">Please choose the days of the week on which you would like to recieve alerts.</string>
     <string name="action_change_contact">Change Contact</string>
     <string name="action_change_days">Change Days/Times</string>
+    <string name="button_powerdown">Hibernate InTouch</string>
+    <string name="title_powerdown">Going on holiday? I can go away until you need me.</string>
 
 </resources>
