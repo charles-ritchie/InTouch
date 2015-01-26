@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.signify.intouch.data.Settings;
 
@@ -18,7 +17,6 @@ public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        Settings mSettings = Settings.getInstance(context);
         try {
 
             if (bundle != null) {
@@ -30,16 +28,10 @@ public class SmsReceiver extends BroadcastReceiver {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
                     String phoneNumber = currentMessage.getDisplayOriginatingAddress();
 
-                    String senderNum = phoneNumber;
                     String message = currentMessage.getDisplayMessageBody();
 
-                    Log.i("SmsReceiver", "senderNum: "+ senderNum + "; message: " + message);
+                    Log.i("SmsReceiver", "senderNum: "+ phoneNumber + "; message: " + message);
 
-
-                    // Show alert
-                    int duration = Toast.LENGTH_LONG;
-                    Toast toast = Toast.makeText(context, "senderNum: "+ senderNum + ", message: " + message, duration);
-                    toast.show();
                     AlertTracker.getInstance(context).textReceived(message);
 
                 } // end for loop

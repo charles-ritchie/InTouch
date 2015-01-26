@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +13,10 @@ import java.util.Map;
  */
 public class ContactInformation {
 
-    String mContactID;
-    Uri mContactURI;
-    ContentResolver mContentResolver;
-    Map mContactDetails;
+    private static String mContactID;
+    private static Uri mContactURI;
+    private static ContentResolver mContentResolver;
+    private static Map mContactDetails;
 
     public ContactInformation(ContentResolver content_resolver){
         mContentResolver = content_resolver;
@@ -42,8 +41,8 @@ public class ContactInformation {
                 new String[]{mContactID},null
         );
         Boolean exists = cursor.moveToFirst();
-        int phoneNumberColumnIndex = 0;
-        int nameColumnIndex = 0;
+        int phoneNumberColumnIndex;
+        int nameColumnIndex;
         phoneNumberColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
         nameColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
         while(exists){

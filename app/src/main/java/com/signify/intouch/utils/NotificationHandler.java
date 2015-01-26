@@ -76,10 +76,13 @@ public class NotificationHandler {
                 .setContentIntent(resultPendingIntent)
                 .setContentText(text)
                 .setStyle(bigStyle)
+                .setPriority(Notification.PRIORITY_MAX)
                 .addAction (R.drawable.ic_action_cancel,"Wait", null)
                 .addAction (R.drawable.ic_action_email,"SMS", pendSendIntent)
                 .addAction (R.drawable.ic_action_call,"Call", pendCallIntent).build();
         mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+        mNotification.defaults |= Notification.DEFAULT_SOUND;
+        mNotification.defaults |= Notification.DEFAULT_VIBRATE;
     }
 
     public void showNotification(int id){

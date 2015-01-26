@@ -14,7 +14,6 @@ import com.signify.intouch.data.Settings;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class SetupDayActivity extends ActionBarActivity {
@@ -22,19 +21,19 @@ public class SetupDayActivity extends ActionBarActivity {
     private Button buttonTimeStart;
     private Button buttonTimeFinish;
     private Button buttonDayNext;
-    private String timerUsed;
+    private String mTimerUsed;
 
     private Settings mSettings;
-    private String[] times;
+    private String[] mTimes;
 
     private RelativeLayout layoutStartTimeGroup;
     private RelativeLayout layoutFinishTimeGroup;
 
-    private SimpleDateFormat dateFormat;
+    private SimpleDateFormat mDateFormat;
 
-    private Boolean[] activeDays;
+    private Boolean[] mActiveDays;
 
-    private int[] checkBoxIds = new int[] {
+    private int[] mCheckBoxIds = new int[] {
             R.id.checkbox_monday,
             R.id.checkbox_tuesday,
             R.id.checkbox_wednesday,
@@ -49,7 +48,7 @@ public class SetupDayActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_day);
 
-        dateFormat = new SimpleDateFormat("H:mm");
+        mDateFormat = new SimpleDateFormat("H:mm");
 
 
         mSettings = Settings.getInstance(this);
@@ -69,7 +68,7 @@ public class SetupDayActivity extends ActionBarActivity {
         buttonTimeStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timerUsed = "startTime";
+                mTimerUsed = "startTime";
                 DialogFragment newFragment = new TimePickerFragment();
                 newFragment.show(getSupportFragmentManager(), "timePicker");
             }
@@ -79,20 +78,20 @@ public class SetupDayActivity extends ActionBarActivity {
         buttonTimeFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timerUsed = "endTime";
+                mTimerUsed = "endTime";
                 DialogFragment newFragment = new TimePickerFragment();
                 newFragment.show(getSupportFragmentManager(), "timePicker");
             }
         });
 
         if(mSettings.getFirstRun()) {
-            activeDays = new Boolean[]{false, false, false, false, false, false, false};
-            times = new String[]{"00:00", "23:59"};
+            mActiveDays = new Boolean[]{false, false, false, false, false, false, false};
+            mTimes = new String[]{"00:00", "23:59"};
         } else {
-            activeDays = mSettings.getActiveDays();
-            times = mSettings.getTimes();
-            buttonTimeStart.setText("Start at "+times[0]);
-            buttonTimeFinish.setText("Finish at "+times[1]);
+            mActiveDays = mSettings.getActiveDays();
+            mTimes = mSettings.getTimes();
+            buttonTimeStart.setText("Start at " + mTimes[0]);
+            buttonTimeFinish.setText("Finish at "+ mTimes[1]);
             layoutStartTimeGroup.setVisibility(View.VISIBLE);
             layoutFinishTimeGroup.setVisibility(View.VISIBLE);
             buttonDayNext.setVisibility(View.VISIBLE);
@@ -102,25 +101,26 @@ public class SetupDayActivity extends ActionBarActivity {
 
     private void nextPage(){
         mSettings.setFirstRun(false);
-        mSettings.setActiveDays(activeDays);
+        mSettings.setActiveDays(mActiveDays);
+        mSettings.setTimes(mTimes);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     private void setCheckBoxes(){
         for(int i = 0; i < 7; i++){
-            if(activeDays[i] == true){
-                ((CheckBox) findViewById(checkBoxIds[i])).setChecked(true);
+            if(mActiveDays[i]){
+                ((CheckBox) findViewById(mCheckBoxIds[i])).setChecked(true);
             }
         }
     }
 
     public void timePicked(int hourOfDay, int minute) {
-        switch (timerUsed){
+        switch (mTimerUsed){
             case "startTime":
-                times[0] = hourOfDay + ":" + minute;
+                mTimes[0] = hourOfDay + ":" + minute;
                 try {
-                    if(dateFormat.parse(times[1]).after(dateFormat.parse(times[0]))){
+                    if(mDateFormat.parse(mTimes[1]).after(mDateFormat.parse(mTimes[0]))){
                         buttonTimeStart.setText("Start at " +hourOfDay+":"+String.format("%02d",minute));
                         layoutFinishTimeGroup.setVisibility(View.VISIBLE);
                     } else {
@@ -133,12 +133,11 @@ public class SetupDayActivity extends ActionBarActivity {
                 }
                 break;
             case "endTime":
-                times[1] = hourOfDay + ":" + minute;
+                mTimes[1] = hourOfDay + ":" + minute;
                 try {
-                    if(dateFormat.parse(times[1]).after(dateFormat.parse(times[0]))){
+                    if(mDateFormat.parse(mTimes[1]).after(mDateFormat.parse(mTimes[0]))){
                         buttonTimeFinish.setText("Finish at " +hourOfDay+":"+String.format("%02d",minute));
                         buttonDayNext.setVisibility(View.VISIBLE);
-                        mSettings.setTimes(times);
                     } else {
                         buttonTimeFinish.setText("Finish");
                         Toast.makeText(this, "Finish time must be after start time.", Toast.LENGTH_LONG).show();
@@ -159,12 +158,8 @@ public class SetupDayActivity extends ActionBarActivity {
         layoutStartTimeGroup.setVisibility(View.VISIBLE);
 
         for(int i = 0; i < 7; i++){
-            if(checkBoxIds[i] == view.getId()){
-                if(checked){
-                    activeDays[i] = true;
-                }else{
-                    activeDays[i] = false;
-                }
+            if(mCheckBoxIds[i] == view.getId()){
+                mActiveDays[i] = (checked) ? true : false;
             }
         }
     }

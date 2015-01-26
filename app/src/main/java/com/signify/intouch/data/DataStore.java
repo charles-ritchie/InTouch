@@ -6,7 +6,6 @@ package com.signify.intouch.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 
 /**
@@ -14,18 +13,18 @@ import android.util.Log;
  */
 public class DataStore {
     private static final String PREFS = "com.signify.intouch.datastore";
-    private static DataStore instance = null;
+    private static DataStore mInstance = null;
     public static SharedPreferences mPref;
 
     private DataStore(Context context) {
-        this.mPref = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        mPref = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
     public static DataStore getInstance(Context context){
-        if (instance == null){
-            instance = new DataStore(context);
+        if (mInstance == null){
+            mInstance = new DataStore(context);
         }
-        return instance;
+        return mInstance;
     }
 
     public void saveString(String key, String value){

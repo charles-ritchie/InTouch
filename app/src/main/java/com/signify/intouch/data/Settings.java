@@ -3,26 +3,23 @@ package com.signify.intouch.data;
 import android.content.Context;
 import android.net.Uri;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by critchie on 22/01/2015.
  */
 public class Settings {
 
-    DataStore mStore;
-    static Settings instance;
+    private static DataStore mStore;
+    private static Settings mInstance;
 
     private Settings(Context context) {
         mStore = DataStore.getInstance(context);
     }
 
     public static Settings getInstance(Context context){
-        if (instance == null){
-            instance = new Settings(context);
+        if (mInstance == null){
+            mInstance = new Settings(context);
         }
-        return instance;
+        return mInstance;
     }
 
     public boolean getFirstRun() {
