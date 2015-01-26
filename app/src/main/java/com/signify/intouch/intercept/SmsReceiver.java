@@ -40,6 +40,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     int duration = Toast.LENGTH_LONG;
                     Toast toast = Toast.makeText(context, "senderNum: "+ senderNum + ", message: " + message, duration);
                     toast.show();
+                    AlertTracker.getInstance(context).textReceived(message);
 
                 } // end for loop
             } // bundle is null
