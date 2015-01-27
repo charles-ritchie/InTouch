@@ -1,6 +1,9 @@
 package com.signify.intouch.intercept;
 
 import android.content.Context;
+import android.service.notification.NotificationListenerService;
+import android.support.v4.app.NotificationCompat;
+import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 import com.signify.intouch.MainActivity;
@@ -26,19 +29,19 @@ public class AlertTracker {
     private static ContactInformation mContactInfo;
 
     private AlertTracker(){
-
+        mDateFormat = new SimpleDateFormat("H:mm-DDD/yyyy");
+        mCalendar = Calendar.getInstance();
     }
 
     public static AlertTracker getInstance(Context context){
         if (mInstance == null){
             mInstance = new AlertTracker();
-            mContext = context;
-            mSettings = Settings.getInstance(mContext);
-            mContactInfo.changeURI(mSettings.getContactUri());
-            mContactInfo.refresh();
-            mDateFormat = new SimpleDateFormat("H:mm-DDD/yyyy");
-            mCalendar = Calendar.getInstance();
         }
+        mContext = context;
+        mSettings = Settings.getInstance(mContext);
+        mContactInfo = new ContactInformation(mContext.getContentResolver());
+        mContactInfo.changeURI(mSettings.getContactUri());
+        mContactInfo.refresh();
         return mInstance;
     }
 
@@ -52,7 +55,7 @@ public class AlertTracker {
         Boolean result = false;
         try {
             Log.d("Day", String.valueOf(day));
-            if(mSettings.getActiveDays()[day]) {
+            if(mSettings.getActiveDays()[day] && !mSettings.getHibernate()) {
                 String dateSuffix = "-"+String.valueOf(Calendar.getInstance().get(Calendar.DATE))+"/"
                         +String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 
@@ -72,22 +75,38 @@ public class AlertTracker {
         }
         return result;
     }
-    public void textReceived(String message){
-        if(checkOkToAlert()) {
+
+    private Boolean checkNumbersSame(String numberToTest) {
+        String okNumber = ((String) mContactInfo.getContactDetails().get("number"));
+        if(okNumber.substring(3).contains("+")){
+
+        }
+        Log.d("calling number", numberToTest+"---"+okNumber);
+        Log.d("calling name",((String) mContactInfo.getContactDetails().get("name")));
+        return (PhoneNumberUtils.compare(okNumber, numberToTest)) ? true : false;
+    }
+
+
+    public void smsReceived(String phoneNumber, String message){
+        if(checkOkToAlert() && checkNumbersSame(phoneNumber)) {
             NotificationHandler noti = NotificationHandler.getInstance(mContext);
             noti.setupNotification("Your Significant Other Text You", "They Said: "+message, MainActivity.class);
-            noti.showNotification(1234);
+            noti.cancelNotification(1001);
+            noti.showNotification(1001);
         }
     }
 
-    public void callReceived(String callerNumber){
-        NotificationHandler noti = NotificationHandler.getInstance(mContext);
-        try {
-        String timeNow = mCalendar.getTime().toString();
-        noti.setupNotification("Your Significant Other Just Called You","You missed a call from your significant other at"+mDateFormat.parse(timeNow) , MainActivity.class);
-        noti.showNotification(1234);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public void callReceived(String phoneNumber){
+
+        if(checkOkToAlert() && checkNumbersSame(phoneNumber)) {
+            NotificationHandler noti = NotificationHandler.getInstance(mContext);
+            try {
+                noti.setupNotification("Your Significant Other Just Called You", "You missed a call from your significant other at"
+                        , MainActivity.class);
+                noti.showNotification(1002);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

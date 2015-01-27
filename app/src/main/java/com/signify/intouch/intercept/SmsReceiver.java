@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
-import com.signify.intouch.data.Settings;
-
 public class SmsReceiver extends BroadcastReceiver {
 
     public SmsReceiver() {
@@ -30,9 +28,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
                     String message = currentMessage.getDisplayMessageBody();
 
-                    Log.i("SmsReceiver", "senderNum: "+ phoneNumber + "; message: " + message);
 
-                    AlertTracker.getInstance(context).textReceived(message);
+                    AlertTracker.getInstance(context).smsReceived(phoneNumber, message);
 
                 } // end for loop
             } // bundle is null

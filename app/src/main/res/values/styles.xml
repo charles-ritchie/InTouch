@@ -20,9 +20,9 @@
              colorControlHighlight & colorSwitchThumbNormal. -->
     </style>
 
-    <color name="colorPrimaryDark">#558B2F</color>
-    <color name="colorAccent">#CCFF90</color>
-    <color name="colorPrimary">#8BC34A</color>
+    <color name="colorPrimaryDark">#880E4F</color>
+    <color name="colorAccent">#E91E63</color>
+    <color name="colorPrimary">#C2185B</color>
 
     <color name="colorCardBackground">#ffffff</color>
 </resources>

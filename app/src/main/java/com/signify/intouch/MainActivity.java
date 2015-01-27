@@ -11,6 +11,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.signify.intouch.data.Settings;
 import com.signify.intouch.utils.NotificationHandler;
@@ -20,6 +23,8 @@ public class MainActivity extends ActionBarActivity {
 
     private static final String First_Run = "com.signify.intouch.firstrun";
     Settings mSettings;
+    TextView hibernateStatusText;
+    ImageView hibernateImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,18 @@ public class MainActivity extends ActionBarActivity {
         firstRunCheck();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        hibernateStatusText = (TextView) findViewById(R.id.hibernateStatusText);
+
+        hibernateImageButton = (ImageView) findViewById(R.id.hibernateImageButton);
+        hibernateImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleImageButton();
+            }
+        });
+
+        setImageButton();
     }
 
 
@@ -56,13 +73,34 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SetupDayActivity.class);
+        if (id == R.id.action_help) {
+            Intent intent = new Intent(this, HelpActivity.class);
             startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleImageButton(){
+        if(mSettings.getHibernate()){
+            mSettings.setHibernate(false);
+        }
+        else{
+            mSettings.setHibernate(true);
+        }
+        setImageButton();
+    }
+
+    private void setImageButton(){
+        if(!mSettings.getHibernate()){
+            hibernateImageButton.setImageResource(R.drawable.active_tick);
+            hibernateStatusText.setText(R.string.text_hibernate_status_false);
+        }
+        else{
+            hibernateImageButton.setImageResource(R.drawable.stopped_cross);
+            hibernateStatusText.setText(R.string.text_hibernate_status_true);
+        }
     }
 
     private void firstRunCheck(){

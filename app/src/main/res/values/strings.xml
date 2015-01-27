@@ -5,14 +5,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_respond">Respond</string>
-    <string name="title_activity_setup_details">In Touch Setup</string>
+    <string name="title_activity_setup_details">Choose Contact</string>
     <string name="settings_toolbar">In Touch</string>
     <string name="setup_welcome_text">Welcome to InTouch. As this is your first time running this appplication, you will need to setup a few details.</string>
     <string name="button_add_contact">Choose Significant Other</string>
     <string name="text_intouch_header">IN TOUCH</string>
     <string name="text_contact_details_default">Please Select Your Significant Other from Contacts</string>
     <string name="button_next">Accept</string>
-    <string name="title_activity_setup_date">SetupDateActivity</string>
+    <string name="title_activity_setup_date">Edit Days and Times</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="friday">Friday</string>
@@ -28,6 +28,10 @@
     <string name="action_change_contact">Change Contact</string>
     <string name="action_change_days">Change Days/Times</string>
     <string name="button_powerdown">Hibernate InTouch</string>
-    <string name="title_powerdown">Going on holiday? I can go away until you need me.</string>
+    <string name="title_powerdown">The current status of InTouch. Click to stop.</string>
+    <string name="action_help">Get Some Help</string>
+    <string name="text_hibernate_status_true">InTouch is currently hibernating and is off. Click the CROSS to turn InTouch back on.</string>
+    <string name="text_hibernate_status_false">InTouch is currently on. Click the TICK to start hibernating and turn InTouch off.</string>
+    <string name="title_activity_help">Help</string>
 
 </resources>

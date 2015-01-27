@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -53,7 +54,7 @@ public class NotificationHandler {
         sendIntent.setData(Uri.parse("sms:"+ mContactInfo.getContactDetails().get("number")));
         PendingIntent pendSendIntent = PendingIntent.getActivity(mContext, 0, sendIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Log.d("calling", ((String)mContactInfo.getContactDetails().get("number")));
+        Log.d("calling", ((String) mContactInfo.getContactDetails().get("number")));
 
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
@@ -86,8 +87,17 @@ public class NotificationHandler {
     }
 
     public void showNotification(int id){
-        mNotificationManager.notify(id, mNotification);
+        final int idf = id;
+        Handler h = new Handler();
+        h.postDelayed(new Runnable(){
+            public void run(){
+                mNotificationManager.notify(idf, mNotification);
+            }
+        },1000);
     }
 
+    public void cancelNotification(int id){
+        mNotificationManager.cancel(id);
+    }
 }
 

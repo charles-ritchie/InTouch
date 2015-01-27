@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,7 +34,7 @@ public class SetupContactActivity extends ActionBarActivity {
 
         contactInfo = new ContactInformation(getContentResolver());
 
-        LinearLayout blurb = (LinearLayout) findViewById(R.id.intouch_welcom_blurb);
+        LinearLayout blurb = (LinearLayout) findViewById(R.id.intouch_welcome_blurb);
 
         textContactDetails = (TextView) findViewById(R.id.textContactDetails);
 
@@ -62,8 +61,10 @@ public class SetupContactActivity extends ActionBarActivity {
             updateContactText();
             buttonNextPage.setVisibility(View.VISIBLE);
             blurb.setVisibility(View.INVISIBLE);
-
+        }else{
+            mSettings.setHibernate(false);
         }
+
     }
 
     @Override

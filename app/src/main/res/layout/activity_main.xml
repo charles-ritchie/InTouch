@@ -4,26 +4,27 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:id="@+id/hibernateImageButton"
+        android:src="@drawable/active_tick"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:cropToPadding="false"
+        android:scaleType="centerInside"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_powerdown"
-            android:id="@+id/textView5"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_powerdown"
+        android:id="@+id/hibernateStatusText"
+        android:layout_marginBottom="37dp"
+        android:gravity="center"
+        android:layout_above="@+id/hibernateImageButton"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_powerdown"
-            android:id="@+id/button"/>
-
-    </LinearLayout>
 </RelativeLayout>

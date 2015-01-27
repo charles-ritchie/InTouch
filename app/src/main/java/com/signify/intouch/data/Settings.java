@@ -63,4 +63,12 @@ public class Settings {
             mStore.saveBool("active_day_"+i, days[i]);
         }
     }
+
+    public Boolean getHibernate() {
+        return mStore.getBool("hibernate");
+    }
+
+    public void setHibernate(Boolean hibernate) {
+            mStore.saveBool("hibernate", hibernate);
+    }
 }

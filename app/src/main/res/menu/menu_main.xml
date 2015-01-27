@@ -5,15 +5,16 @@
     <item android:id="@+id/action_change_contact"
           android:title="@string/action_change_contact"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          android:icon="@drawable/ic_action_person"
+          app:showAsAction="always"/>
     <item android:id="@+id/action_change_days"
           android:title="@string/action_change_days"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
-
-
+          android:orderInCategory="200"
+          android:icon="@drawable/ic_action_time"
+          app:showAsAction="always"/>
+    <item android:id="@+id/action_help"
+          android:title="@string/action_help"
+          android:orderInCategory="300"
+          android:icon="@drawable/ic_action_help"
+          app:showAsAction="always"/>
 </menu>

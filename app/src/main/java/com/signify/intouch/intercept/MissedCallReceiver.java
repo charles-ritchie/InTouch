@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 public class MissedCallReceiver extends BroadcastReceiver {
 
@@ -42,9 +43,8 @@ public class MissedCallReceiver extends BroadcastReceiver {
         if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
             // If phone was ringing(mRing=true) and not received(mCallReceived=false) , then it is a missed call
             if (mRing && !mCallReceived) {
-//                if(PhoneNumberUtils.compare(callerPhoneNumber,((String)mContactInfo.getContactDetails().get("number")))){
+                Log.d("missed call detected", "ok");
                     AlertTracker.getInstance(context).callReceived(callerPhoneNumber);
-//                }
             }
         }
     }
