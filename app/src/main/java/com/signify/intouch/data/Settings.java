@@ -71,4 +71,20 @@ public class Settings {
     public void setHibernate(Boolean hibernate) {
             mStore.saveBool("hibernate", hibernate);
     }
+
+//    public Boolean activeDate() {
+//        return mStore.getString("active_date");
+//    }
+//
+//    public void activeDate(Boolean hibernate) {
+//        mStore.saveString("active_date", hibernate);
+//    }
+
+    public Boolean getContactedToday() {
+        return mStore.getBool("contacted_today");
+    }
+
+    public void setContactedToday(Boolean contactedToday) {
+        mStore.saveBool("contacted_today", contactedToday);
+    }
 }

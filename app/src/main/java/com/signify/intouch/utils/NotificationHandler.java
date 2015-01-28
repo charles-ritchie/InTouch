@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
+import android.provider.SyncStateContract;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.signify.intouch.R;
+import com.signify.intouch.data.AppContstants;
 import com.signify.intouch.data.ContactInformation;
 import com.signify.intouch.data.Settings;
 
@@ -45,21 +47,36 @@ public class NotificationHandler {
     public void setupNotification(String title, String text, Class response){
         mContactInfo.changeURI(mSettings.getContactUri());
         mContactInfo.refresh();
-        Intent resultIntent = new Intent(mContext,response);
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+ mContactInfo.getContactDetails().get("number")));
-        PendingIntent pendCallIntent = PendingIntent.getActivity(mContext, 0, callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("sms:"+ mContactInfo.getContactDetails().get("number")));
-        PendingIntent pendSendIntent = PendingIntent.getActivity(mContext, 0, sendIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent callIntent = new Intent(mContext, UserActionService.class);
+        callIntent.putExtra(AppContstants.RESPONSE_MODE_KEY, AppContstants.RESPONSE_MODE_CALL);
+        callIntent.putExtra(AppContstants.RESPONSE_MODE_NUMBER_KEY,
+               (String)mContactInfo.getContactDetails().get("number"));
+
+        PendingIntent pendCallIntent = PendingIntent.getService(mContext, AppContstants.RESPONSE_MODE_CALL_ID,
+                callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent sendIntent = new Intent(mContext, UserActionService.class);
+        sendIntent.putExtra(AppContstants.RESPONSE_MODE_KEY, AppContstants.RESPONSE_MODE_SMS);
+        sendIntent.putExtra(AppContstants.RESPONSE_MODE_NUMBER_KEY,
+                (String)mContactInfo.getContactDetails().get("number"));
+
+        PendingIntent pendSendIntent = PendingIntent.getService(mContext, AppContstants.RESPONSE_MODE_SMS_ID,
+                sendIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent doneIntent = new Intent(mContext, UserActionService.class);
+        doneIntent.putExtra(AppContstants.RESPONSE_MODE_KEY, AppContstants.RESPONSE_MODE_DONE);
+
+        PendingIntent pendDoneIntent = PendingIntent.getService(mContext, AppContstants.RESPONSE_MODE_DONE_ID,
+                doneIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Log.d("calling", ((String) mContactInfo.getContactDetails().get("number")));
 
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
-
         stackBuilder.addParentStack(response);
+
+        Intent resultIntent = new Intent(mContext,response);
 
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(
@@ -78,7 +95,7 @@ public class NotificationHandler {
                 .setContentText(text)
                 .setStyle(bigStyle)
                 .setPriority(Notification.PRIORITY_MAX)
-                .addAction (R.drawable.ic_action_cancel,"Wait", null)
+                .addAction (R.drawable.ic_action_accept,"Done", pendDoneIntent)
                 .addAction (R.drawable.ic_action_email,"SMS", pendSendIntent)
                 .addAction (R.drawable.ic_action_call,"Call", pendCallIntent).build();
         mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -98,6 +115,12 @@ public class NotificationHandler {
 
     public void cancelNotification(int id){
         mNotificationManager.cancel(id);
+    }
+
+    public void clearAll(){
+        cancelNotification(AppContstants.ALERT_CALL_ID);
+        cancelNotification(AppContstants.ALERT_SMS_ID);
+        cancelNotification(AppContstants.ALERT_OTHER_ID);
     }
 }
 

@@ -7,6 +7,7 @@ import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
 import com.signify.intouch.MainActivity;
+import com.signify.intouch.data.AppContstants;
 import com.signify.intouch.data.ContactInformation;
 import com.signify.intouch.data.Settings;
 import com.signify.intouch.utils.NotificationHandler;
@@ -91,8 +92,8 @@ public class AlertTracker {
         if(checkOkToAlert() && checkNumbersSame(phoneNumber)) {
             NotificationHandler noti = NotificationHandler.getInstance(mContext);
             noti.setupNotification("Your Significant Other Text You", "They Said: "+message, MainActivity.class);
-            noti.cancelNotification(1001);
-            noti.showNotification(1001);
+            noti.clearAll();
+            noti.showNotification(AppContstants.ALERT_SMS_ID);
         }
     }
 
@@ -103,10 +104,16 @@ public class AlertTracker {
             try {
                 noti.setupNotification("Your Significant Other Just Called You", "You missed a call from your significant other at"
                         , MainActivity.class);
-                noti.showNotification(1002);
+                noti.showNotification(AppContstants.ALERT_CALL_ID);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void callMade(String phoneNumber){
+        if(checkNumbersSame(phoneNumber)){
+            mSettings.setContactedToday(true);
         }
     }
 }

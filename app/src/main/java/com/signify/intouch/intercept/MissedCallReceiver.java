@@ -32,7 +32,6 @@ public class MissedCallReceiver extends BroadcastReceiver {
             callerPhoneNumber = bundle.getString("incoming_number");
         }
 
-
         // If incoming call is received
         if (state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
             mCallReceived = true;
