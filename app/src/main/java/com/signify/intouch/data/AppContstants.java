@@ -24,4 +24,10 @@ public class AppContstants {
     public final static int ALERT_ALERT_ID = 1004;
 
     public final static String RESPONSE_MODE_NUMBER_KEY = "RESPONSE_MODE_NUMBER_KEY";
+
+    /*
+    Alarm Manager called by
+     */
+    public final static int ALARM_CALLED_FROM_BOOT = 5001;
+    public final static int ALARM_CALLED_FROM_DATE_CHANGE = 5002;
 }

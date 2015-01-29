@@ -72,13 +72,13 @@ public class Settings {
             mStore.saveBool("hibernate", hibernate);
     }
 
-//    public Boolean activeDate() {
-//        return mStore.getString("active_date");
-//    }
-//
-//    public void activeDate(Boolean hibernate) {
-//        mStore.saveString("active_date", hibernate);
-//    }
+    public String getDateToday() {
+        return mStore.getString("date_today");
+    }
+
+    public void setDateToday(String today) {
+        mStore.saveString("date_today", today);
+    }
 
     public Boolean getContactedToday() {
         return mStore.getBool("contacted_today");
@@ -86,5 +86,19 @@ public class Settings {
 
     public void setContactedToday(Boolean contactedToday) {
         mStore.saveBool("contacted_today", contactedToday);
+    }
+
+    public String[] getSweetSpots() {
+        String[] returnArr = new String[6];
+        for(int i=0; i<6; i++) {
+            returnArr[i] = mStore.getString("sweet_spot_"+i);
+        }
+        return returnArr;
+    }
+
+    public void setSweetSpots(String[] times) {
+        for(int i=0; i<6; i++) {
+            mStore.saveString("sweet_spot_"+i, times[i]);
+        }
     }
 }

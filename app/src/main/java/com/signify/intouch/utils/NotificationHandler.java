@@ -7,9 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Handler;
-import android.provider.SyncStateContract;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -17,6 +15,7 @@ import com.signify.intouch.R;
 import com.signify.intouch.data.AppContstants;
 import com.signify.intouch.data.ContactInformation;
 import com.signify.intouch.data.Settings;
+import com.signify.intouch.services.UserActionService;
 
 /**
  * Created by critchie on 26/01/2015.

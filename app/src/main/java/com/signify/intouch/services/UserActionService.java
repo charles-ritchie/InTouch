@@ -1,4 +1,4 @@
-package com.signify.intouch.utils;
+package com.signify.intouch.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.signify.intouch.data.AppContstants;
 import com.signify.intouch.data.Settings;
+import com.signify.intouch.utils.NotificationHandler;
 
 public class UserActionService extends Service {
 

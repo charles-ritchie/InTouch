@@ -1,4 +1,4 @@
-package com.signify.intouch.intercept;
+package com.signify.intouch.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+
+import com.signify.intouch.utils.AlertTracker;
 
 public class MissedCallReceiver extends BroadcastReceiver {
 

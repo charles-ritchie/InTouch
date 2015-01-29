@@ -1,7 +1,11 @@
 package com.signify.intouch.utils;
 
+import android.util.Log;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -37,5 +41,44 @@ public class DateTimeManager {
 
     private static int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));
+    }
+
+    public static String getDateStringToday(){
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+        String today = form.format(Calendar.getInstance().getTime());
+        return today;
+    }
+
+    public static Date stringToTime(String date){
+        Date rDate = null;
+        try {
+            String dateSuffix = "-"+String.valueOf(Calendar.getInstance().get(Calendar.DATE))+"/"
+                    +String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+            rDate = new SimpleDateFormat("H:mm-DDD/yyyy").parse(date+dateSuffix);
+        } catch(ParseException e){
+
+        }
+        return rDate;
+    }
+
+    public static boolean checkSameDay(String date){
+        Log.w("DateTimeManager","Checking Dates Are The Same: |"+date+"|"+getDateStringToday()+"|");
+        if(date.equals(getDateStringToday())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean checkTimeAfter(String time){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DATE, Calendar.getInstance().get(Calendar.DATE));
+        Date now = cal.getTime();
+        Log.w("DateTimeManager","Checking Time: |"+stringToTime(time)+"|after|"+now+"|");
+        if(stringToTime(time).after(now)){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

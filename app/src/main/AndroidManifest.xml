@@ -37,7 +37,7 @@
         </activity>
 
         <receiver
-            android:name=".intercept.SmsReceiver"
+            android:name=".receivers.SmsReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
@@ -45,7 +45,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".intercept.MissedCallReceiver"
+            android:name=".receivers.MissedCallReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
@@ -53,7 +53,16 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".intercept.BootReceiver"
+            android:name=".receivers.BootReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter android:priority="500" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receivers.NextDayReceiver"
             android:enabled="true"
             android:exported="true" >
         </receiver>
@@ -64,13 +73,13 @@
         </activity>
 
         <service
-            android:name=".utils.UserActionService"
+            android:name=".services.UserActionService"
             android:enabled="true"
             android:exported="true" >
         </service>
 
         <receiver
-            android:name=".intercept.OutgoingCallReceiver"
+            android:name=".receivers.OutgoingCallReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
@@ -79,16 +88,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name=".intercept.NextDayReceiver"
+        <!--<receiver-->
+            <!--android:name=".receivers.NextDayReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.DATE_CHANGED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <service
+            android:name=".services.AlarmFiredService"
             android:enabled="true"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.DATE_CHANGED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
+        </service>
     </application>
 
 </manifest>

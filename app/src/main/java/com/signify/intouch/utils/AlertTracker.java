@@ -1,8 +1,6 @@
-package com.signify.intouch.intercept;
+package com.signify.intouch.utils;
 
 import android.content.Context;
-import android.service.notification.NotificationListenerService;
-import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 
@@ -10,9 +8,7 @@ import com.signify.intouch.MainActivity;
 import com.signify.intouch.data.AppContstants;
 import com.signify.intouch.data.ContactInformation;
 import com.signify.intouch.data.Settings;
-import com.signify.intouch.utils.NotificationHandler;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -103,6 +99,20 @@ public class AlertTracker {
             NotificationHandler noti = NotificationHandler.getInstance(mContext);
             try {
                 noti.setupNotification("Your Significant Other Just Called You", "You missed a call from your significant other at"
+                        , MainActivity.class);
+                noti.showNotification(AppContstants.ALERT_CALL_ID);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void alertTriggered(){
+
+        if(checkOkToAlert()) {
+            NotificationHandler noti = NotificationHandler.getInstance(mContext);
+            try {
+                noti.setupNotification("You Should Touch Base", "You haven't yet contacted your partner, maybe you should do it now?"
                         , MainActivity.class);
                 noti.showNotification(AppContstants.ALERT_CALL_ID);
             } catch (Exception e) {

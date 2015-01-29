@@ -1,9 +1,11 @@
-package com.signify.intouch.intercept;
+package com.signify.intouch.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.signify.intouch.utils.AlertTracker;
 
 public class OutgoingCallReceiver extends BroadcastReceiver {
     public OutgoingCallReceiver() {
@@ -12,7 +14,6 @@ public class OutgoingCallReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent){
         String phoneNumber = getResultData();
-        Log.e("OutgoingCallReciever", "Tracking Call");
         if (phoneNumber == null) {
             phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
         }
