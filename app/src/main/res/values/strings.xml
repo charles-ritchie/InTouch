@@ -33,5 +33,6 @@
     <string name="text_hibernate_status_true">InTouch is currently hibernating and is off. Click the CROSS to turn InTouch back on.</string>
     <string name="text_hibernate_status_false">InTouch is currently on. Click the TICK to start hibernating and turn InTouch off.</string>
     <string name="title_activity_help">Help</string>
+    <string name="text_toggle_alerts">Toggle randomized contact reminders.</string>
 
 </resources>

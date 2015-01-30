@@ -75,6 +75,7 @@ public class NotificationHandler {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(mContext);
         stackBuilder.addParentStack(response);
 
+
         Intent resultIntent = new Intent(mContext,response);
 
         stackBuilder.addNextIntent(resultIntent);

@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.signify.intouch.data.Settings;
+import com.signify.intouch.utils.AlarmMan;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +36,8 @@ public class SetupDayActivity extends ActionBarActivity {
 
     private Boolean[] mActiveDays;
 
+    private  boolean mToggleAlerts;
+
     private int[] mCheckBoxIds = new int[] {
             R.id.checkbox_monday,
             R.id.checkbox_tuesday,
@@ -42,6 +47,9 @@ public class SetupDayActivity extends ActionBarActivity {
             R.id.checkbox_saturday,
             R.id.checkbox_sunday
     };
+
+    private RelativeLayout layoutToggleAlerts;
+    private ToggleButton buttonToggleAlerts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class SetupDayActivity extends ActionBarActivity {
 
         layoutStartTimeGroup = (RelativeLayout)findViewById(R.id.layoutStartTimeGroup);
         layoutFinishTimeGroup = (RelativeLayout)findViewById(R.id.layoutFinishTimeGroup);
+        layoutToggleAlerts = (RelativeLayout)findViewById(R.id.layoutToggleAlerts);
 
         buttonDayNext = (Button) findViewById(R.id.buttonDayNext);
         buttonDayNext.setOnClickListener(new View.OnClickListener() {
@@ -84,27 +93,51 @@ public class SetupDayActivity extends ActionBarActivity {
             }
         });
 
+        buttonToggleAlerts = (ToggleButton)findViewById(R.id.buttonToggleAlerts);
+        buttonToggleAlerts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mToggleAlerts = buttonToggleAlerts.isChecked();
+            }
+        });
+
         if(mSettings.getFirstRun()) {
             mActiveDays = new Boolean[]{false, false, false, false, false, false, false};
             mTimes = new String[]{"00:00", "23:59"};
+            mToggleAlerts = true;
+            buttonToggleAlerts.setChecked(mToggleAlerts);
         } else {
             mActiveDays = mSettings.getActiveDays();
             mTimes = mSettings.getTimes();
             buttonTimeStart.setText("Start at " + mTimes[0]);
             buttonTimeFinish.setText("Finish at "+ mTimes[1]);
+            Log.w("get alerts",String.valueOf(mSettings.getAlertsOn()));
+            mToggleAlerts = mSettings.getAlertsOn();
+            buttonToggleAlerts.setChecked(mToggleAlerts);
             layoutStartTimeGroup.setVisibility(View.VISIBLE);
             layoutFinishTimeGroup.setVisibility(View.VISIBLE);
+            layoutToggleAlerts.setVisibility(View.VISIBLE);
             buttonDayNext.setVisibility(View.VISIBLE);
             setCheckBoxes();
         }
     }
 
     private void nextPage(){
+        if(mSettings.getFirstRun()){
+            AlarmMan.getInstance(this).setDateChangeAlarm();
+        }
         mSettings.setFirstRun(false);
         mSettings.setActiveDays(mActiveDays);
         mSettings.setTimes(mTimes);
+        mSettings.setAlertsOn(mToggleAlerts);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        setFirstAlarms();
+    }
+
+    private void setFirstAlarms(){
+        AlarmMan.getInstance(this).newDay();
+        AlarmMan.getInstance(this).chooseAlarmType();
     }
 
     private void setCheckBoxes(){
@@ -138,6 +171,7 @@ public class SetupDayActivity extends ActionBarActivity {
                     if(mDateFormat.parse(mTimes[1]).after(mDateFormat.parse(mTimes[0]))){
                         buttonTimeFinish.setText("Finish at " +hourOfDay+":"+String.format("%02d",minute));
                         buttonDayNext.setVisibility(View.VISIBLE);
+                        layoutToggleAlerts.setVisibility(View.VISIBLE);
                     } else {
                         buttonTimeFinish.setText("Finish");
                         Toast.makeText(this, "Finish time must be after start time.", Toast.LENGTH_LONG).show();

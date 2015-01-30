@@ -1,135 +1,183 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.signify.intouch.SetupDayActivity">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                tools:context="com.signify.intouch.SetupDayActivity"
+    >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:orientation="vertical"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/linearLayout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_days_to_alert"
-            android:id="@+id/textView4"/>
-
-        <CheckBox android:id="@+id/checkbox_monday"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/monday"
-                  android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/checkbox_tuesday"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/tuesday"
-                  android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/checkbox_wednesday"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/wednesday"
-                  android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/checkbox_thursday"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/thursday"
-                  android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/checkbox_friday"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/friday"
-                  android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/checkbox_saturday"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/saturday"
-                  android:onClick="onCheckboxClicked"/>
-        <CheckBox android:id="@+id/checkbox_sunday"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/sunday"
-                  android:onClick="onCheckboxClicked"/>
-
-    </LinearLayout>
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layoutStartTimeGroup"
-        android:layout_marginTop="10dp"
-        android:id="@+id/layoutFinishTimeGroup"
-        android:visibility="invisible">
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:id="@+id/scrollView2"
+        >
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_time_finish"
-            android:id="@+id/buttonTimeFinish"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentLeft="true"
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="false"
             android:layout_alignParentStart="true"
-            android:background="@drawable/button"
-            android:minHeight="@dimen/max_button_height"/>
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_end_time"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-    </RelativeLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                          android:orientation="vertical"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/linearLayout">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/layoutStartTimeGroup"
-        android:visibility="invisible">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_days_to_alert"
+                    android:id="@+id/textView4"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_start_time"
-            android:id="@+id/textView3"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+                <CheckBox android:id="@+id/checkbox_monday"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/monday"
+                          android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_tuesday"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/tuesday"
+                          android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_wednesday"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/wednesday"
+                          android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_thursday"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/thursday"
+                          android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_friday"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/friday"
+                          android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_saturday"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/saturday"
+                          android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_sunday"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="@string/sunday"
+                          android:onClick="onCheckboxClicked"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_start_time"
-            android:id="@+id/buttonTimeStart"
-            android:layout_below="@+id/textView3"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/button"
-        android:minHeight="@dimen/max_button_height"/>
+            </LinearLayout>
 
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutStartTimeGroup"
+                android:layout_marginTop="10dp"
+                android:id="@+id/layoutFinishTimeGroup"
+                android:visibility="invisible">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_next"
-        android:id="@+id/buttonDayNext"
-        android:visibility="invisible"
-        android:layout_gravity="right"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/button"
-    android:minHeight="@dimen/max_button_height"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_time_finish"
+                    android:id="@+id/buttonTimeFinish"
+                    android:layout_below="@+id/textView"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/button"
+                    android:minHeight="@dimen/max_button_height"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_end_time"
+                    android:id="@+id/textView"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:id="@+id/layoutStartTimeGroup"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_start_time"
+                    android:id="@+id/textView3"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_start_time"
+                    android:id="@+id/buttonTimeStart"
+                    android:layout_below="@+id/textView3"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/button"
+                android:minHeight="@dimen/max_button_height"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layoutToggleAlerts"
+                android:visibility="invisible"
+                android:layout_below="@+id/layoutFinishTimeGroup"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_toggle_alerts"
+                    android:id="@+id/textView13"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonToggleAlerts"
+                    android:layout_below="@+id/textView13"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_next"
+                android:id="@+id/buttonDayNext"
+                android:visibility="invisible"
+                android:layout_gravity="right"
+                android:background="@drawable/button"
+            android:minHeight="@dimen/max_button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -30,6 +30,14 @@ public class Settings {
         mStore.saveBool("first_run", firstRun);
     }
 
+    public boolean getAlertsOn() {
+        return mStore.getBool("alerts_on");
+    }
+
+    public void setAlertsOn(boolean alertsOn) {
+        mStore.saveBool("alerts_on", alertsOn);
+    }
+
     public Uri getContactUri() {
         return Uri.parse(mStore.getString("contact_uri"));
     }
@@ -89,15 +97,15 @@ public class Settings {
     }
 
     public String[] getSweetSpots() {
-        String[] returnArr = new String[6];
-        for(int i=0; i<6; i++) {
+        String[] returnArr = new String[3];
+        for(int i=0; i<3; i++) {
             returnArr[i] = mStore.getString("sweet_spot_"+i);
         }
         return returnArr;
     }
 
     public void setSweetSpots(String[] times) {
-        for(int i=0; i<6; i++) {
+        for(int i=0; i<3; i++) {
             mStore.saveString("sweet_spot_"+i, times[i]);
         }
     }

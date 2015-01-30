@@ -19,28 +19,63 @@ public class DateTimeManager {
 
     }
 
-    public static void getRandomDateTime(String[] args) {
-
-        SimpleDateFormat dfDateTime  = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss", Locale.getDefault());
-        int year = Calendar.getInstance().get(Calendar.YEAR);// Here you can set Range of years you need
-        int month = Calendar.getInstance().get(Calendar.MONTH);
-        int hour = randBetween(9, 22); //Hours will be displayed in between 9 to 22
-        int min = randBetween(0, 59);
-        int sec = randBetween(0, 59);
-
-
-        GregorianCalendar gc = new GregorianCalendar(year, month, 1);
-        int day = randBetween(1, gc.getActualMaximum(gc.DAY_OF_MONTH));
-
-        gc.set(year, month, day, hour, min,sec);
-
-        System.out.println(dfDateTime.format(gc.getTime()));
-
+    private static long randBetween(long start, long end) {
+        return start + (long)Math.round(Math.random() * (end - start));
     }
 
+    public static String[] generateSweetSpots(Date date1, Date date2){
+        String[] sweetSpots = new String[3];
+        double mDate1 = date1.getTime();
+        double mDate2 = date2.getTime();
+        double diff = mDate2 - mDate1;
+        double diffSeconds = diff / 1000;
+        double diffMinutes = diffSeconds / 60;
+        double diffHours = diffMinutes /60;
 
-    private static int randBetween(int start, int end) {
-        return start + (int)Math.round(Math.random() * (end - start));
+        double diffDiv = (diff - diff % 3) / 3;
+        double diffApp = diffDiv * 0.66;
+        double diffHalf = diffDiv / 2.7;
+
+        mDate1 += diffApp;
+        mDate2 -= diffApp;
+
+        double a1 = mDate1 - diffHalf;
+        double a2 = mDate1 + diffHalf;
+        double b1 = mDate2 - diffHalf;
+        double b2 = mDate2 + diffHalf;
+
+        double iDiff = (b1 - a2) / 2;
+        double c1 = a2 + iDiff - 1800000;
+        double c2 = b1 - iDiff + 1800000;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis((long)a1);
+        Log.w("-------",calendar.getTime().toString());
+        calendar.setTimeInMillis(randBetween((long)a1,(long)a2));
+        Log.w("---------->",calendar.getTime().toString());
+        sweetSpots[0] = dateToMinutes(calendar.getTime());
+        Log.w("",sweetSpots[0]);
+        calendar.setTimeInMillis((long)a2);
+        Log.w("-------",calendar.getTime().toString());
+
+        calendar.setTimeInMillis((long)c1);
+        Log.w("-------",calendar.getTime().toString());
+        calendar.setTimeInMillis(randBetween((long)c1,(long)c2));
+        Log.w("---------->",calendar.getTime().toString());
+        sweetSpots[1] = dateToMinutes(calendar.getTime());
+        Log.w("",sweetSpots[1]);
+        calendar.setTimeInMillis((long)c2);
+        Log.w("-------",calendar.getTime().toString());
+
+        calendar.setTimeInMillis((long)b1);
+        Log.w("-------",calendar.getTime().toString());
+        calendar.setTimeInMillis(randBetween((long)b1,(long)b2));
+        Log.w("---------->",calendar.getTime().toString());
+        sweetSpots[2] = dateToMinutes(calendar.getTime());
+        Log.w("",sweetSpots[2]);
+        calendar.setTimeInMillis((long)b2);
+        Log.w("-------",calendar.getTime().toString());
+        return sweetSpots;
     }
 
     public static String getDateStringToday(){
@@ -58,6 +93,11 @@ public class DateTimeManager {
         } catch(ParseException e){
 
         }
+        return rDate;
+    }
+
+    public static String dateToMinutes(Date timeIn){
+        String rDate = new SimpleDateFormat("H:mm").format(timeIn);
         return rDate;
     }
 

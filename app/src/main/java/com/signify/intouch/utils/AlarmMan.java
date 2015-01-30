@@ -46,26 +46,28 @@ public class AlarmMan {
     }
 
     private boolean checkIfNeedsSet(int alarmCalledFrom){
-        if(alarmCalledFrom == AppContstants.ALARM_CALLED_FROM_BOOT){
-            Log.e("AlarmMan","Called on boot");
-            newDay();
-            if(!DateTimeManager.checkSameDay(mSettings.getDateToday())){
-                newDay();
-            } else if(DateTimeManager.checkSameDay(mSettings.getDateToday())){
-                if(!mSettings.getContactedToday()) {
+        if(!mSettings.getFirstRun()){
+            if (alarmCalledFrom == AppContstants.ALARM_CALLED_FROM_BOOT) {
+                Log.e("AlarmMan", "Called on boot");
+                if (!DateTimeManager.checkSameDay(mSettings.getDateToday())) {
+                    newDay();
+                } else if (DateTimeManager.checkSameDay(mSettings.getDateToday())) {
                     chooseAlarmType();
                 }
-            }
 
-        } else if (alarmCalledFrom == AppContstants.ALARM_CALLED_FROM_DATE_CHANGE){
-            Log.e("AlarmMan","Called on date change");
-            newDay();
+            } else if (alarmCalledFrom == AppContstants.ALARM_CALLED_FROM_DATE_CHANGE) {
+                Log.e("AlarmMan", "Called on date change");
+                newDay();
+                chooseAlarmType();
+            }
         }
         return true;
     }
 
     public void setReminderAlarm(Date date){
-        Log.e("AlarmMan", "Reminder Alarm Set For:"+date.getTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date.getTime());
+        Log.e("AlarmMan", "Reminder Alarm Set For:"+calendar.toString());
         Intent pintent = new Intent(mContext, AlarmFiredService.class);
         alarmIntent = PendingIntent.getService(mContext, 0, pintent, 0);
 
@@ -78,7 +80,6 @@ public class AlarmMan {
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 03);
 
-        Log.e("BootReceiver", "Alarm Set");
         Intent pintent = new Intent(mContext, NextDayReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(mContext, 0, pintent, 0);
 
@@ -106,10 +107,10 @@ public class AlarmMan {
     }
 
     public void newDay(){
+        mSettings.setSweetSpots(DateTimeManager.generateSweetSpots(DateTimeManager.stringToTime(mSettings.getTimes()[0]),
+                DateTimeManager.stringToTime(mSettings.getTimes()[1])));
         mSettings.setContactedToday(false);
         mSettings.setDateToday(DateTimeManager.getDateStringToday());
-        String[] testTimes = new String[] {"10:00","12:00","16:26","","",""};
-        mSettings.setSweetSpots(testTimes);
     }
 
 }
